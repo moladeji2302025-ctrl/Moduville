@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #070714;
+  --foreground: #f0ece3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #0f0f24;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a4a;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4a85360;
+}
+
+/* Selection */
+::selection {
+  background: #d4a85330;
+  color: #f0ece3;
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid #d4a85360;
+  outline-offset: 2px;
+}
+
+/* Textarea auto-resize feel */
+textarea {
+  field-sizing: content;
+  min-height: 44px;
+  max-height: 140px;
+}
