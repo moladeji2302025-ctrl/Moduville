@@ -6,10 +6,9 @@ import {
 } from '@/lib/claude'
 import type { UserGoal } from '@/lib/types'
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
-
 export async function POST(req: NextRequest) {
   try {
+    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
     const { goals }: { goals: UserGoal[] } = await req.json()
 
     const response = await client.messages.create({

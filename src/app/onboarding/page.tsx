@@ -148,14 +148,14 @@ export default function OnboardingPage() {
           </motion.div>
         )}
 
-        {step === 'reveal' && (
+        {step === 'reveal' && routine && (
           <motion.div
             key="reveal"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
           >
-            <StepDragonReveal />
+            <StepDragonReveal routine={routine} goals={goals} />
           </motion.div>
         )}
       </AnimatePresence>

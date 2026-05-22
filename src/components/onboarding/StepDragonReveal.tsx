@@ -1,8 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { DragonEgg } from '@/components/dragon/DragonEgg'
+import { saveOnboardingData } from '@/lib/storage'
+import type { GeneratedRoutine, UserGoal } from '@/lib/types'
 
 const REVEAL_LINES = [
   { text: 'Your dragon egg has been placed.', delay: 1.0 },
@@ -11,8 +14,18 @@ const REVEAL_LINES = [
   { text: 'Every day you show up will change it.', delay: 3.2 },
 ]
 
-export function StepDragonReveal() {
+interface Props {
+  routine: GeneratedRoutine
+  goals: UserGoal[]
+}
+
+export function StepDragonReveal({ routine, goals }: Props) {
+  const router = useRouter()
   const [showButton, setShowButton] = useState(false)
+
+  useEffect(() => {
+    saveOnboardingData(routine, goals)
+  }, [routine, goals])
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden">
@@ -65,7 +78,7 @@ export function StepDragonReveal() {
             <motion.button
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
-              onClick={() => alert('Main app coming next — the journey begins here.')}
+              onClick={() => router.push('/dashboard')}
               className="px-10 py-4 bg-gold/10 border border-gold/35 text-gold font-display text-sm tracking-[0.2em] rounded-xl hover:bg-gold/18 hover:border-gold/60 transition-all duration-300 uppercase"
             >
               Enter Moduville

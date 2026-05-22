@@ -3,9 +3,8 @@ import Anthropic from '@anthropic-ai/sdk'
 import { buildConsultantSystemPrompt } from '@/lib/claude'
 import type { UserGoal, GeneratedRoutine, ConsultantMessage } from '@/lib/types'
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
-
 export async function POST(req: NextRequest) {
+  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
   const {
     messages,
     goals,
