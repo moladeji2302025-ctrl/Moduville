@@ -16,9 +16,11 @@ const MESSAGES = [
   'Balancing deep work, rest, and real life...',
   'Preparing your Consultant...',
 ]
+const SLOW_MSG = 'Almost there — your routine is complex. A few more seconds...'
 
 export function StepProcessing({ goals, onComplete }: Props) {
   const [msgIndex, setMsgIndex] = useState(0)
+  const [slow,     setSlow]     = useState(false)
   const [error, setError] = useState<string | null>(null)
   const called = useRef(false)
 
@@ -28,6 +30,12 @@ export function StepProcessing({ goals, onComplete }: Props) {
       setMsgIndex(i => Math.min(i + 1, MESSAGES.length - 1))
     }, 1900)
     return () => clearInterval(id)
+  }, [])
+
+  // After 25s show a reassurance message instead of a blank wait
+  useEffect(() => {
+    const id = setTimeout(() => setSlow(true), 25_000)
+    return () => clearTimeout(id)
   }, [])
 
   // Generate the routine (guarded against React Strict Mode double-invoke)
@@ -89,14 +97,14 @@ export function StepProcessing({ goals, onComplete }: Props) {
       {/* Cycling message */}
       <AnimatePresence mode="wait">
         <motion.p
-          key={msgIndex}
+          key={slow ? 'slow' : msgIndex}
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.4 }}
-          className="text-muted text-sm text-center"
+          className="text-muted text-sm text-center max-w-xs"
         >
-          {MESSAGES[msgIndex]}
+          {slow ? SLOW_MSG : MESSAGES[msgIndex]}
         </motion.p>
       </AnimatePresence>
     </div>

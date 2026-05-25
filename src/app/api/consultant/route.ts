@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
-import { buildConsultantSystemPrompt } from '@/lib/claude'
+import { buildConsultantSystemPrompt, buildPremiumConsultantPrompt } from '@/lib/claude'
 import type { UserGoal, GeneratedRoutine, ConsultantMessage } from '@/lib/types'
 
 export async function POST(req: NextRequest) {
@@ -9,13 +9,17 @@ export async function POST(req: NextRequest) {
     messages,
     goals,
     routine,
+    isPremium,
   }: {
     messages: ConsultantMessage[]
     goals: UserGoal[]
     routine: GeneratedRoutine
+    isPremium?: boolean
   } = await req.json()
 
-  const systemPrompt = buildConsultantSystemPrompt(goals, routine)
+  const systemPrompt = isPremium
+    ? buildPremiumConsultantPrompt(goals, routine)
+    : buildConsultantSystemPrompt(goals, routine)
 
   // When messages is empty, use a trigger so Claude speaks first
   const apiMessages =
@@ -24,8 +28,8 @@ export async function POST(req: NextRequest) {
       : messages.map(m => ({ role: m.role, content: m.content }))
 
   const stream = client.messages.stream({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 1024,
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 600,
     system: systemPrompt,
     messages: apiMessages,
   })

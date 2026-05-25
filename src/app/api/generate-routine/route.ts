@@ -12,8 +12,8 @@ export async function POST(req: NextRequest) {
     const { goals }: { goals: UserGoal[] } = await req.json()
 
     const response = await client.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 8192,
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 7000,
       system: ROUTINE_GENERATION_SYSTEM_PROMPT,
       messages: buildRoutineGenerationMessages(goals),
     })

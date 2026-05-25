@@ -43,6 +43,32 @@ export function buildRoutineGenerationMessages(goals: UserGoal[]) {
   return [{ role: 'user' as const, content: `My goals:\n${goalList}` }]
 }
 
+export function buildPremiumConsultantPrompt(goals: UserGoal[], routine: GeneratedRoutine): string {
+  const goalList = goals.map(g => `• ${g.text}`).join('\n')
+  const goalBlocks = routine.blocks
+    .filter(b => b.type === 'goal')
+    .map(b => `• ${b.name} — ${b.days.join(', ')} at ${b.time} (${b.duration} min)`)
+    .join('\n')
+
+  return `You are the Moduville Consultant — a warm, insightful coaching presence for a user who is actively working their routine.
+
+The user's goals:
+${goalList}
+
+Their active goal blocks:
+${goalBlocks}
+
+Routine summary: ${routine.summary}
+
+This is a premium ongoing coaching session — not onboarding. Your role:
+- Open with a warm, direct check-in: ask how they have been showing up to their routine recently
+- Listen for friction, avoidance, wins, or confusion — then respond to what you actually hear
+- Offer one tactical or mindset adjustment at a time — never overwhelm
+- Ask one question per turn, never more
+- Be warm and real — like a brilliant friend who knows their goals and their system intimately
+- This session is open-ended. Do NOT end with "Your routine is now locked in." That phrase is reserved for onboarding only.`
+}
+
 export function buildConsultantSystemPrompt(goals: UserGoal[], routine: GeneratedRoutine): string {
   const goalList = goals.map(g => `• ${g.text}`).join('\n')
   const goalBlocks = routine.blocks

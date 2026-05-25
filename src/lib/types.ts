@@ -61,3 +61,75 @@ export type OnboardingStep =
   | 'consultant'
   | 'review'
   | 'reveal'
+
+export type CitizenType =
+  | 'philosopher'
+  | 'doctor'
+  | 'lawyer'
+  | 'builder'
+  | 'healer'
+  | 'scholar'
+  | 'artist'
+
+export interface CitizenLetter {
+  id: string
+  citizenType: CitizenType
+  citizenName: string
+  citizenTitle: string
+  subject: string
+  body: string
+  date: string
+  read: boolean
+}
+
+export type DragonStage = 'egg' | 'hatching' | 'baby' | 'adult'
+
+export interface UserProfile {
+  username: string
+  isPublic: boolean
+  email?: string
+}
+
+export type FriendStatus = 'none' | 'requested' | 'friends'
+
+export interface GiftRecord {
+  userId: string
+  pack:   'small' | 'standard' | 'premium'
+  date:   string
+}
+
+export interface SocialState {
+  friendStatuses:     Record<string, FriendStatus>
+  sentGifts:          GiftRecord[]
+  sentEncouragements: string[]   // userIds
+}
+
+export interface RoutineTemplate {
+  id:                 string
+  title:              string
+  subtitle:           string           // "Built for X"
+  goalCategory:       GoalCategory
+  creatorUsername:    string
+  creatorNote:        string           // personal tip from the creator
+  consultantScore:    number           // 1–10, AI-rated quality
+  consultantReview:   string           // one-line verdict
+  installCount:       number
+  avgCompletionRate:  number           // 0–1
+  elixirType:         ElixirType
+  blocks:             RoutineBlock[]
+}
+
+export type ProofType   = 'social' | 'document' | 'video' | 'photo'
+export type ProofStatus = 'approved' | 'rejected' | 'uncertain'
+
+export interface ProofEntry {
+  id: string
+  blockId: string
+  blockName: string
+  date: string
+  type: ProofType
+  content: string        // URL for links; filename for files
+  status: ProofStatus
+  submittedAt: string
+  note?: string
+}

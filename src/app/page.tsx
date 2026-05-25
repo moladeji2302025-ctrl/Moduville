@@ -71,19 +71,22 @@ export default function HomePage() {
           transition={{ duration: 1, delay: 0.3 }}
           className="mb-10"
         >
-          {['Your Routine.', 'Your Dragon.', 'Your Kingdom.'].map((line, i) => (
-            <motion.h1
-              key={line}
-              initial={{ opacity: 0, x: -16 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 + i * 0.18 }}
-              className={`font-display text-4xl sm:text-6xl md:text-7xl leading-tight ${
-                i === 1 ? 'text-gold' : 'text-text'
-              }`}
-            >
-              {line}
-            </motion.h1>
-          ))}
+          <motion.h1
+            initial={{ opacity: 0, x: -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.4 }}
+            className="font-display text-4xl sm:text-6xl md:text-7xl leading-tight text-text"
+          >
+            Build the life you keep
+          </motion.h1>
+          <motion.h1
+            initial={{ opacity: 0, x: -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.58 }}
+            className="font-display text-4xl sm:text-6xl md:text-7xl leading-tight text-gold"
+          >
+            promising yourself.
+          </motion.h1>
         </motion.div>
 
         {/* Separator + description */}
@@ -95,8 +98,8 @@ export default function HomePage() {
         >
           <div className="w-20 h-px bg-gold mx-auto mb-8 opacity-40" />
           <p className="text-muted text-base sm:text-lg leading-relaxed max-w-lg mx-auto">
-            Build every part of yourself — health, faith, business, creativity —
-            in one unified daily life. One dragon. One world.
+            Every goal you carry; health, faith, business, creativity; deserves a daily structure built around it.
+            One routine. One direction. One you.
           </p>
         </motion.div>
 

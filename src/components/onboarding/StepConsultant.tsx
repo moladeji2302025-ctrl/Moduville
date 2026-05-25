@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Send, Loader2 } from 'lucide-react'
+import { Send, Loader2, Mic, MicOff } from 'lucide-react'
 import type { UserGoal, GeneratedRoutine, ConsultantMessage } from '@/lib/types'
+import { useVoice } from '@/lib/VoiceContext'
 
 interface Props {
   goals: UserGoal[]
@@ -22,6 +23,9 @@ export function StepConsultant({ goals, routine, onComplete }: Props) {
   const bottomRef = useRef<HTMLDivElement>(null)
   const hasInitialized = useRef(false)
 
+  const { supported, isListening, transcript, transcriptId, speak, startListening, stopListening } = useVoice()
+  const lastTranscriptId = useRef(0)
+
   // Scroll to latest message
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -33,6 +37,13 @@ export function StepConsultant({ goals, routine, onComplete }: Props) {
     hasInitialized.current = true
     callConsultant([])
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Fill input from voice transcript
+  useEffect(() => {
+    if (!transcript || transcriptId === lastTranscriptId.current) return
+    lastTranscriptId.current = transcriptId
+    setInput(transcript)
+  }, [transcriptId, transcript])
 
   async function callConsultant(currentMessages: ConsultantMessage[]) {
     setIsStreaming(true)
@@ -64,6 +75,7 @@ export function StepConsultant({ goals, routine, onComplete }: Props) {
       ]
       setMessages(finalMessages)
       setStreamingText('')
+      speak(full)
 
       if (full.includes(LOCK_IN_SIGNAL)) {
         setIsLocked(true)
@@ -187,11 +199,31 @@ export function StepConsultant({ goals, routine, onComplete }: Props) {
       {/* Input */}
       {!isLocked && (
         <div className="flex gap-2 items-end">
+          {supported && (
+            <motion.button
+              whileTap={{ scale: 0.93 }}
+              onClick={() => isListening ? stopListening() : startListening()}
+              className={`relative p-3 rounded-xl border transition-all flex-shrink-0 ${
+                isListening
+                  ? 'bg-ember/15 border-ember/40 text-ember'
+                  : 'bg-deep border-border text-muted hover:text-text hover:border-border/80'
+              }`}
+            >
+              {isListening && (
+                <motion.div
+                  animate={{ scale: [1, 1.4], opacity: [0.4, 0] }}
+                  transition={{ repeat: Infinity, duration: 1, ease: 'easeOut' }}
+                  className="absolute inset-0 rounded-xl bg-ember/30"
+                />
+              )}
+              {isListening ? <MicOff className="w-4 h-4 relative" /> : <Mic className="w-4 h-4" />}
+            </motion.button>
+          )}
           <textarea
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKey}
-            placeholder="Reply to the Consultant..."
+            placeholder={isListening ? 'Listening…' : 'Reply to the Consultant…'}
             rows={1}
             disabled={isStreaming}
             className="flex-1 bg-deep border border-border rounded-xl px-4 py-3 text-sm text-text placeholder-muted/50 resize-none focus:outline-none focus:border-gold/45 transition-colors disabled:opacity-50"
