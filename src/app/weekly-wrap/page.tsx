@@ -192,7 +192,10 @@ export default function WeeklyWrapPage() {
   const slides: React.ReactNode[] = [
 
     /* 0 — Intro */
-    <div className="flex flex-col items-center justify-center h-full text-center px-8 select-none">
+    <div
+      key="intro"
+      className="flex flex-col items-center justify-center h-full text-center px-8 select-none"
+    >
       <motion.p
         initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
         className="font-display text-[11px] tracking-[0.45em] uppercase text-gold mb-4"
@@ -222,7 +225,10 @@ export default function WeeklyWrapPage() {
     </div>,
 
     /* 1 — Completion rate */
-    <div className="flex flex-col items-center justify-center h-full text-center px-8 select-none">
+    <div
+      key="completion"
+      className="flex flex-col items-center justify-center h-full text-center px-8 select-none"
+    >
       <motion.p
         initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
         className="font-display text-[11px] tracking-[0.42em] uppercase mb-6"
@@ -248,7 +254,10 @@ export default function WeeklyWrapPage() {
     </div>,
 
     /* 2 — Best day */
-    <div className="flex flex-col items-center justify-center h-full text-center px-8 select-none">
+    <div
+      key="best-day"
+      className="flex flex-col items-center justify-center h-full text-center px-8 select-none"
+    >
       <motion.p
         initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
         className="font-display text-[11px] tracking-[0.42em] uppercase text-muted mb-8"
@@ -276,7 +285,10 @@ export default function WeeklyWrapPage() {
     </div>,
 
     /* 3 — Time invested */
-    <div className="flex flex-col items-center justify-center h-full text-center px-8 select-none">
+    <div
+      key="time-invested"
+      className="flex flex-col items-center justify-center h-full text-center px-8 select-none"
+    >
       <motion.p
         initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
         className="font-display text-[11px] tracking-[0.42em] uppercase text-muted mb-6"
@@ -314,7 +326,10 @@ export default function WeeklyWrapPage() {
     </div>,
 
     /* 4 — Elixirs */
-    <div className="flex flex-col items-center justify-center h-full text-center px-8 select-none">
+    <div
+      key="elixirs"
+      className="flex flex-col items-center justify-center h-full text-center px-8 select-none"
+    >
       <motion.p
         initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
         className="font-display text-[11px] tracking-[0.42em] uppercase text-muted mb-5"
@@ -362,7 +377,10 @@ export default function WeeklyWrapPage() {
     </div>,
 
     /* 5 — Dragon */
-    <div className="flex flex-col items-center justify-center h-full text-center px-8 select-none">
+    <div
+      key="dragon"
+      className="flex flex-col items-center justify-center h-full text-center px-8 select-none"
+    >
       <motion.p
         initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
         className="font-display text-[11px] tracking-[0.42em] uppercase text-muted mb-5"
@@ -415,7 +433,10 @@ export default function WeeklyWrapPage() {
     </div>,
 
     /* 6 — Sign off */
-    <div className="flex flex-col items-center justify-center h-full text-center px-8 select-none">
+    <div
+      key="sign-off"
+      className="flex flex-col items-center justify-center h-full text-center px-8 select-none"
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.55 }} animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.1, type: 'spring', stiffness: 180 }}
